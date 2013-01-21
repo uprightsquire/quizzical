@@ -1,0 +1,163 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<style>
+
+#bodyblock {
+	background: #EEEEEE;
+	margin: auto;
+	width: 800px;
+	min-height: 500px;
+	padding-top: 50px;
+	padding-left: 50px;
+	padding-right: 50px;
+	text-align: justify;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	box-shadow: 1px 3px 3px #292929;
+	-webkit-box-shadow: 1px 3px 3px #292929;
+	color: #666666;
+	}
+	
+#container {
+	background: #EEEEEE;
+	margin: auto;
+	width: 900px;
+	height: 75px;
+	padding-top: 50px;
+	font-family: helvetica, arial, sans-serif;
+	box-shadow: 1px 3px 3px #292929;
+	-webkit-box-shadow: 1px 3px 3px #292929;
+	color: #666666;
+	
+	}
+
+h1 {
+	background: #e3e3e3;
+	background: -moz-linear-gradient(top, #e3e3FF, #c8c8FF);
+	background: -webkit-gradient(linear, left top, left bottom, from(#e3e3FF), to(#c8c8FF));
+	padding: 10px 20px;
+	margin-left: -20px;
+	margin-top: 0;
+	position: relative;
+	width: 65%;
+	box-shadow: 1px 1px 3px #292929;
+	-webkit-box-shadow: 1px 1px 3px #292929;
+	color: #666666;
+	text-shadow: 0 1px 0 white;
+}
+
+.arrow {
+	 width: 0; height: 0;
+	 line-height: 0;
+	 border-left: 20px solid transparent;
+	 border-top: 10px solid #c8c8c8;
+	 top: 104%;
+	 left: 0;
+	 position: absolute;
+}
+
+
+#login{
+       background: -moz-linear-gradient(top, #e3e3FF, #c8c8FF);
+        background: -webkit-gradient(linear, left top, left bottom, from(#e3e3FF), to(#c8c8FF));
+        width: 200px;
+        height: 175px;
+        padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+        font-family: helvetica, arial, sans-serif;
+        font-size: x-small;
+	box-shadow: 1px 1px 3px #292929;
+        -webkit-box-shadow: 1px 1px 3px #292929;
+        text-shadow: 0 1px 0 white;
+	color: #666666;
+}
+
+#footer {
+	background: #EEEEEE;
+	margin: auto;
+	width: 900px;
+	height: 25px;
+	padding-top: 50px;
+	font-family: helvetica, arial, sans-serif;
+	font-size: x-small;
+	font-weight: lighter;
+	color: #333;
+	text-align: center;
+	box-shadow: 1px 3px 3px #292929;
+	-webkit-box-shadow: 1px 3px 3px #292929;
+	color: #666666;
+	}
+
+ #content {
+background-color: #BBBBBB;
+}
+
+	</style>
+	
+	<!--[if IE]>
+		<style>
+			.arrow { top: 100%; }
+		</style>
+	<![endif]-->
+
+
+  <head>
+    <title>$title</title>
+  </head>
+
+
+<body>
+<div id = "content">
+<div id="container">
+     
+    <h1>$title<span class="arrow"></span> </h1>
+		
+    </div>
+    
+<div id="bodyblock">
+    
+      <table width="800">
+  <tr>
+    <td width = "500"><i>Quizzical</i> is a quiz-generating system for teachers and students of Highschool level chemistry which can easily provide a vast range of questions on a range of topics. It uses a series of custom algotithms to generate pseudo-random multiple choice questions and provides worked solutions to those questions which have been incorrectly answered.
+<br></br>
+<br></br>
+Video
+<br></br>
+<br></br>
+</td>
+    <td valign = "top" align = "right" width="300">
+<div id = "login" style="text-align: left">
+<b>Login</b>
+
+<br></br>
+<br></br>
+<form action="/auth/login" method="post">
+username: <input type="text" name="username" size="15" />
+password: <input type="password" name="password" size="15" />
+<br></br>
+<br></br>
+<input type="submit" value="Sign in" />
+<br></br>
+</form>
+<br />
+<div style="text-align: left; float:left">
+Forgot login?</div>
+<div style="text-align: right; float:right" onclick="window.location='/register';">Register</div>
+</div>
+<pre>
+
+</pre>
+</td>
+  </tr>
+
+</table>
+    
+    </div>
+
+<div id = "footer">
+</div>
+</div>
+</body>
+
+</html>

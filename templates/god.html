@@ -1,0 +1,286 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://genshi.edgewall.org/">
+  <head>
+    <title>$title</title>
+  </head>
+<style>
+#bodyblock {
+        background: #EEEEEE;
+        margin: auto;
+        width: 800px;
+        min-height: 500px;
+        padding-top: 50px;
+        padding-left: 50px;
+        padding-right: 50px;
+        text-align: justify;
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        box-shadow: 1px 3px 3px #292929;
+        -webkit-box-shadow: 1px 3px 3px #292929;
+        color: #666666;
+        }
+
+
+#logout {
+                text-align:centre;
+                box-shadow: 1px 1px 2px #292929;
+                font-size:smaller;
+                padding: 5px;
+                width: auto;
+                border-radius: 5px;
+}
+
+        
+#container {
+        background: #EEEEEE;
+        margin: auto;
+        width: 900px;
+        height: 75px;
+        padding-top: 50px;
+        font-family: helvetica, arial, sans-serif;
+        box-shadow: 1px 3px 3px #292929;
+        -webkit-box-shadow: 1px 3px 3px #292929;
+        color: #666666;
+        
+        }
+
+h1 {
+        background: #e3e3e3;
+        background: -moz-linear-gradient(top, #e3e3FF, #c8c8FF);
+        background: -webkit-gradient(linear, left top, left bottom, from(#e3e3FF), to(#c8c8FF));
+        padding: 10px 20px;
+        margin-left: -20px;
+        margin-top: 0;
+        position: relative;
+        width: 65%;
+        box-shadow: 1px 1px 3px #292929;
+        -webkit-box-shadow: 1px 1px 3px #292929;
+        color: #666666;
+        text-shadow: 0 1px 0 white;
+}
+
+.arrow {
+         width: 0; height: 0;
+         line-height: 0;
+         border-left: 20px solid transparent;
+         border-top: 10px solid #c8c8c8;
+         top: 104%;
+         left: 0;
+         position: absolute;
+}
+
+
+#login{
+       background: -moz-linear-gradient(top, #e3e3FF, #c8c8FF);
+        background: -webkit-gradient(linear, left top, left bottom, from(#e3e3FF), to(#c8c8FF));
+        width: 200px;
+        height: 150px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        font-family: helvetica, arial, sans-serif;
+        font-size: x-small;
+        box-shadow: 1px 1px 3px #292929;
+        -webkit-box-shadow: 1px 1px 3px #292929;
+        text-shadow: 0 1px 0 white;
+        color: #666666;
+}
+
+#footer {
+        background: #EEEEEE;
+        margin: auto;
+        width: 900px;
+        height: 25px;
+        padding-top: 50px;
+        font-family: helvetica, arial, sans-serif;
+        font-size: x-small;
+        font-weight: lighter;
+        color: #333;
+        text-align: center;
+        box-shadow: 1px 3px 3px #292929;
+        -webkit-box-shadow: 1px 3px 3px #292929;
+        color: #666666;
+        }
+
+
+
+ #content {
+background-color: #BBBBBB;
+height: auto;
+}
+
+ul{
+    margin:0; 
+    padding:0;
+}
+        
+li{
+    margin:0;
+    padding:0;
+}
+
+        .tabrow {
+                    text-align: left;
+                    list-style: none;
+                    line-height: 24px;
+                    height: 26px;
+                    overflow: hidden;
+                    font-size: 12px;
+                    font-family: arial;
+                    position: relative;
+                }
+                .tabrow li {
+                    border: 1px solid #AAA;
+                    background: #D1D1D1;
+                    background: -o-linear-gradient(top, #EEEEEE 50%, #D1D1D1 100%);
+                    background: -ms-linear-gradient(top, #EEEEEE 50%, #D1D1D1 100%);
+                    background: -moz-linear-gradient(top, #EEEEEE 50%, #D1D1D1 100%);
+                    background: -webkit-linear-gradient(top, #EEEEEE 50%, #D1D1D1 100%);
+                    background: linear-gradient(top, #EEEEEE 50%, #D1D1D1 100%);
+                    display: inline-block;
+                    position: relative;
+                    padding-left: 10px;
+                    padding-right: 10px;
+                    z-index: 0;
+                    border-top-left-radius: 6px;
+                    border-top-right-radius: 6px;
+                    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 #FFF;
+                    text-shadow: 0 1px #FFF;
+                }
+                .tabrow a {
+                          color: #555;
+                          text-decoration: none;
+                }
+                .tabrow li.selected {
+                    background: #EEEEEE;
+                    color: #333;
+                    z-index: 2;
+                    border-bottom-color: #EEEEEE;
+                }
+                .tabrow:before {
+                    position: absolute;
+                    content: " ";
+                    width: 100%;
+                    bottom: 0;
+                    left: 0;
+                    border-bottom: 1px solid #AAA;
+                    z-index: 1;
+                }
+                .tabrow li:before,
+                .tabrow li:after {
+                    border: 1px solid #AAA;
+                    position: absolute;
+                    bottom: -1px;
+                    width: 5px;
+                    height: 5px;
+                    content: " ";
+                }
+                .tabrow li:before {
+                    left: -6px;
+                    border-bottom-right-radius: 6px;
+                    border-width: 0 1px 1px 0;
+                    box-shadow: 2px 2px 0 #D1D1D1;
+                }
+                .tabrow li:after {
+                    right: -6px;
+                    border-bottom-left-radius: 6px;
+                    border-width: 0 0 1px 1px;
+                    box-shadow: -2px 2px 0 #D1D1D1;
+                }
+                .tabrow li.selected:before {
+                    box-shadow: 2px 2px 0 #FFF;
+                }
+                .tabrow li.selected:after {
+                    box-shadow: -2px 2px 0 #FFF;
+                }
+
+tr:nth-child(even) {background: #DDD}
+tr:nth-child(odd) {background: #EEEEEE}
+
+</style>
+
+
+
+<body>
+<div id = "content">
+<div id="container">
+     
+    <h1>$title<span class="arrow"></span> </h1>
+		
+    </div>
+    
+<div id="bodyblock">
+        <table style="width:100%">
+        <tr>
+        <td style="width:95%"></td>
+        <td>
+        <div id="logout" onclick="window.location = '/auth/logout';">
+        Logout       
+       </div>
+       </td>
+       </tr>
+       </table>
+
+
+        <ul class = "tabrow">
+
+        <li py:if="tab=='display'" class = "selected" onclick="window.location = '/globaladmin?tab=display';">
+        Display accounts
+        </li>
+        <li py:if="tab=='display'" onclick="window.location = '/globaladmin?tab=add';">
+        Create account key
+        </li>
+
+        <li py:if="tab=='add'" onclick="window.location = '/globaladmin?tab=display';">
+        Display accounts
+        </li>
+        <li py:if="tab=='add'" class = "selected" onclick="window.location = 'globaladmin?tab=add';">
+        Create account key
+        </li>
+        </ul>
+
+        <div py:if="tab=='display'">
+                <br></br>
+                <form action="" method="POST">
+                <div>
+                <input type="submit" name="delete" value="Delete" />
+                </div>
+                <br />
+                <table style="border:1px solid #DDDDDD">
+                <tr style="font-weight:bold">
+                <td> </td>
+                <td style="padding-right:20px">Username</td>
+                <td style="padding-right:20px">Password</td>
+                <td style="padding-right:20px">Email</td>
+                <td style="padding-right:20px">Account Type</td>
+                <td style="padding-right:20px">Key / Class info</td>
+                </tr>
+                <tr py:for="row in content">
+                <td><input type="checkbox" name="id" value="${row[0]}" /></td>
+                <td py:for="item in row[1:]" style="text-overflow: ellipsis">
+                ${item}</td>
+                </tr>
+                </table>
+                </form>
+        </div>
+
+        <div py:if="tab=='add'">
+                <br></br>
+                <div style="font-weight:bold">
+                        Create a School Account Key:
+                </div>
+                <br></br>
+
+                <form action="" method="post">
+                <input type="submit" name="generate" value="Generate Key" />
+                </form>
+                <br />
+                $key
+        </div>
+</div>
+<div id = "footer">
+
+</div>
+</div>
+</body>
+
+</html>
