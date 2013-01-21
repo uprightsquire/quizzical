@@ -20,7 +20,7 @@ class Root(object):
     auth = AuthController()
 
     def __init__(self):
-    return
+        return
 
     def keygen(self):
         con=mysql.connect('localhost','root','myosinmysql','quizzical')
