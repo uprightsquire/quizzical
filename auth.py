@@ -11,6 +11,11 @@ from genshi.template import TemplateLoader
 import MySQLdb as mysql
 
 
+db_server = "localhost"
+db_account = "root"
+db_pass = "myosinsmysql"
+db_name = "quizzical"
+
 SESSION_KEY = '_cp_username'
 
 loader = TemplateLoader(
@@ -19,8 +24,11 @@ loader = TemplateLoader(
 
 
 def account_type(user):
+    """
+    Returns the type of account for a given user
+    """
     try:
-        con = mysql.connect('localhost','root','myosinmysql','quizzical')
+        con = mysql.connect(db_server,db_account,db_pass,db_name)
         cur = con.cursor()
         cur.execute("SELECT type FROM accounts WHERE user = '%s'" % (user))
         result = cur.fetchone()
@@ -69,41 +77,14 @@ def require(*conditions):
     return decorate
 
 
-# Conditions are callables that return True
-# if the user fulfills the conditions they define, False otherwise
-#
-# They can access the current username as cherrypy.request.login
-#
-# Define those at will however suits the application.
-
 def member_of(groupname):
+    """
+    Returns wheather user is belongs to account type
+    """
     return lambda: groupname == account_type(cherrypy.request.login)
 
 def name_is(reqd_username):
     return lambda: reqd_username == cherrypy.request.login
-
-# These might be handy
-
-def any_of(*conditions):
-    """Returns True if any of the conditions match"""
-
-    def check():
-        for c in conditions:
-            if c():
-                return True
-        return False
-    return check
-
-# By default all conditions are required, but this might still be
-# needed if you want to use it inside of an any_of(...) condition
-def all_of(*conditions):
-    """Returns True if all of the conditions match"""
-    def check():
-        for c in conditions:
-            if not c():
-                return False
-        return True
-    return check
 
 
 # Controller to provide login and logout actions
