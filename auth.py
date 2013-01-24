@@ -28,20 +28,33 @@ def account_type(user):
     Returns the type of account for a given user
     """
     try:
-        con = mysql.connect(db_server,db_account,db_pass,db_name)
+        con = mysql.connect("localhost","root","myosinmysql","quizzical")
         cur = con.cursor()
         cur.execute("SELECT type FROM accounts WHERE user = '%s'" % (user))
         result = cur.fetchone()
         con.close()
-    except:
-        return 'x'
-    return result[0]
+        return result[0] 
+    except Exception as e:
+        return None
+    
 
 def check_credentials(username, password):
     """Verifies credentials for username and password.
     Returns None on success or a string describing the error on failure"""
-    if username in ('zwatts', 'steve') and password == 'x':
-        return None
+    #if username in ('zwatts', 'steve') and password == 'x':
+    #    return None
+    try:
+        con = mysql.connect("localhost","root","myosinmysql","quizzical")
+        cur = con.cursor()
+        cur.execute("SELECT pword FROM accounts WHERE user = '%s'" % (username))
+        result = cur.fetchone()
+        con.close()
+        if result[0] == password:
+            return None
+        else:
+            return u"Incorrect username or password." 
+    except Exception as e:
+        return u"%s" % repr(e)
     else:
         return u"Incorrect username or password."
 
