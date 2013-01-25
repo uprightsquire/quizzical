@@ -42,9 +42,21 @@ class Root(object):
         return "Error"
 
     @cherrypy.expose
-    def register(self, username='', password='', email='', key='', fname='', sname=''):
+    def register(self, username='', password='', password2='', email='', key='', fname='', sname='', register = False):
         tmpl = loader.load('reg.html')
-        return tmpl.generate().render('html', doctype='html')
+        status = ''
+        if cherrypy.request.method == 'POST':
+            if register:
+                if username == '' or password == '' or password2 == '' or email == '' or key == '' or fname == '' or sname == '':
+                    status = status + 'Please complete each field\n' 
+                else:
+                    status=status
+                if '@' not in email or '.' not in email:
+                    status = status + 'Please enter a valid email\n'
+                if password != password2:
+                    status = status + 'Passwords do not match\n'
+                
+        return tmpl.generate(status=status, username=username,password=password,password2=password2,email=email,key=key,fname=fname, sname=sname).render('html', doctype='html')
 
     @cherrypy.expose
     def index(self, username='', password='', valid=False):

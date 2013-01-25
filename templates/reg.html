@@ -1,4 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns:py="http://genshi.edgewall.org/">
 
 <style>
 
@@ -127,20 +127,28 @@ background-color: #BBBBBB;
 <br></br>
 <form action="/register" method="post">
 <div style ='font-size:small'>
-registration key: <input type="text" name="key" size="15" />
+registration key: <input type="text" value="$key" name="key" size="15" />
 <br />
-username: <input type="text" name="username" size="15" />
+username: <input type="text" value="$username" name="username" size="15" />
+<br/>
+first name: <input type="text" value="$fname" name="fname" size="15" />
+<br />
+surname: <input type="text" value="$sname" name="sname" size="15" />
 <br/>
 <br/>                                     
-password: <input type="password" name="password" size="15" />
+password: <input type="password" value="$password" name="password" size="15" />
 <br/>
-re-enter password: <input type="password" name="password2" size="15" />                                     
+re-enter password: <input type="password" value="$password2" name="password2" size="15" />                                     
 <br/><br/>
-email: <input type="text" name="email" size="15" />
+email: <input type="text" value="$email" name="email" size="15" />
+<br/>
+</div>                                    
+<br></br>
+<input type="submit" name="register" value="Register" />
+<br></br>
+<div style="font-size:small; color:#990000">
+<py:for each="line in status.split('\n')">${line}<br /></py:for>
 </div>
-<br></br>
-<input type="submit" value="Register" />
-<br></br>
 </form>
 <br />
 <pre>
