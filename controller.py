@@ -9,6 +9,7 @@ from genshi.template import MarkupTemplate
 import MySQLdb as mysql
 from random import randrange as randrange
 from auth import *
+import hashlib
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -40,6 +41,21 @@ class Root(object):
             return key
         con.close()
         return "Error"
+
+    def validKey(self, key):
+        con=mysql.connect('localhost','root','myosinmysql','quizzical')
+        try:
+            cur=con.cursor()
+            cur.execute("SELECT classes FROM accounts")
+            result=cur.fetchall()
+        except:
+            result=None
+        con.close
+
+    def pwhash(self, password):
+        return hashlib.sha512((password).encode('utf-8')).hexdigest()
+        
+        
 
     @cherrypy.expose
     def register(self, username='', password='', password2='', email='', key='', fname='', sname='', register = False):
