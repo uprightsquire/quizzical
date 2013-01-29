@@ -229,6 +229,9 @@ tr:nth-child(odd) {background: #EEEEEE}
         <li py:if="tab=='display'" onclick="window.location = '/globaladmin?tab=add';">
         Create account key
         </li>
+        <li py:if="tab=='display'" onclick="window.location = '/globaladmin?tab=account';">
+        Account settings
+        </li>
 
         <li py:if="tab=='add'" onclick="window.location = '/globaladmin?tab=display';">
         Display accounts
@@ -236,6 +239,19 @@ tr:nth-child(odd) {background: #EEEEEE}
         <li py:if="tab=='add'" class = "selected" onclick="window.location = 'globaladmin?tab=add';">
         Create account key
         </li>
+        <li py:if="tab=='add'" onclick="window.location = '/globaladmin?tab=account';">
+        Account settings
+        </li>
+
+        <li py:if="tab=='account'" onclick="window.location = '/globaladmin?tab=display';">
+        Display accounts
+        </li>
+        <li py:if="tab=='account'" onclick="window.location = 'globaladmin?tab=add';">
+        Create account key
+        </li>
+        <li py:if="tab=='account'" class = "selected" onclick="window.location = '/globaladmin?tab=account';">
+        Account settings
+        </li>          
         </ul>
 
         <div py:if="tab=='display'">
@@ -249,10 +265,11 @@ tr:nth-child(odd) {background: #EEEEEE}
                 <tr style="font-weight:bold">
                 <td> </td>
                 <td style="padding-right:20px">Username</td>
-                <td style="padding-right:20px">Password</td>
                 <td style="padding-right:20px">Email</td>
-                <td style="padding-right:20px">Account Type</td>
-                <td style="padding-right:20px">Key / Class info</td>
+                <td style="padding-right:20px">First Name</td>
+                <td style="padding-right:20px">Surname</td>
+                <td style="padding-right:20px">Account Type</td>  
+                <td style="padding-right:20px">Class Key</td>
                 </tr>
                 <tr py:for="row in content">
                 <td><input type="checkbox" name="id" value="${row[0]}" /></td>
@@ -261,6 +278,42 @@ tr:nth-child(odd) {background: #EEEEEE}
                 </tr>
                 </table>
                 </form>
+        </div>
+
+        <div py:if="tab=='account'">
+                <br></br>
+                <div style="font-weight:bold">
+                        Change Password:
+                </div>
+                <br></br>
+                <form action="" method="post">
+                <div>
+                <div style="font-size:small; width:200px">
+                old password:</div>
+                <input type="password" name="oldpassword"/><br/>
+                <div style="font-size:small; width:200px">
+                new password:
+                </div>
+                <div>
+                <input type="password" name="password1"/>
+                </div>
+                   
+                <div style="font-size:small; width:200px">
+                re-enter new password:
+                </div>
+                <div>
+                <input type="password" name="password2"/>
+                </div>
+                </div>
+                <br/>
+                <div style="font-size:small; color:#990000">
+                $status
+                <br/>
+                   </div>
+                <input type="submit" name="account" value="Submit" />
+                </form>
+                <br />
+                
         </div>
 
         <div py:if="tab=='add'">

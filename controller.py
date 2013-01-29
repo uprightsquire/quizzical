@@ -9,7 +9,7 @@ from genshi.template import MarkupTemplate
 import MySQLdb as mysql
 from random import randrange as randrange
 from auth import *
-import hashlib
+
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -52,9 +52,7 @@ class Root(object):
             result=None
         con.close
 
-    def pwhash(self, password):
-        return hashlib.sha512((password).encode('utf-8')).hexdigest()
-        
+    
         
 
     @cherrypy.expose
@@ -81,10 +79,11 @@ class Root(object):
 
     @cherrypy.expose
     @require(member_of('god'))
-    def globaladmin(self, tab='display', generate=False, delete=False, id=''):
+    def globaladmin(self, tab='display', generate=False, delete=False, account=False, id='', oldpassword = '', password1 = '', password2 = ''):
         tmpl = loader.load('god.html')
         key = ''
         content = ''
+        status = ''
         title='Global Admin'
         if cherrypy.request.method == 'POST':
             if generate:
@@ -99,16 +98,44 @@ class Root(object):
                         cur.execute("DELETE FROM accounts WHERE id = '%d'" % int(i))
                 con.commit()  
                 con.close()
+            if account:
+                status = 'blank'
+                try:
+                    con = mysql.connect("localhost","root","myosinmysql","quizzical")
+                    cur = con.cursor()
+                    cur.execute("SELECT pword FROM accounts WHERE user = '%s'" % (cherrypy.request.login))
+                    result = cur.fetchone()
+                    con.close()
+                    if result[0] == pwhash(oldpassword):
+                        if password1 == password2:
+                            try:
+                                con= mysql.connect('localhost','root','myosinmysql','quizzical')
+                                cur=con.cursor()
+                                cur.execute("UPDATE accounts SET pword = '%s' WHERE user = '%s'" % (pwhash(password2), cherrypy.request.login))      
+                                status = "Password changed"
+                                con.commit()
+                                con.close()        
+                            except Exception as e:
+                                status = "Database Error: %s" % repr(e)
+                                con.rollback()
+                                con.close()
+                        else:
+                            status = "New password not re-entered correctly"
+                    else: 
+                        status = "wrong"
+                except Exception as e:
+                    status ="Database Error %s" % repr(e)
+                
         if tab=='display':
             try:
                 con= mysql.connect('localhost','root','myosinmysql','quizzical')
                 cur=con.cursor()
-                cur.execute("SELECT id,user,pword,email,type,classes FROM accounts")
+                cur.execute("SELECT id,user,email,fname,sname,type,classkey FROM accounts")
                 content=cur.fetchall()
                 con.close()
             except:
                 content="Database Error"
-        return tmpl.generate(title=title, tab=tab, content = content, key = key).render('html', doctype='html')
+        return tmpl.generate(title=title, tab=tab, content = content, key = key, status=status).render('html', doctype='html')
 
 def main():
     

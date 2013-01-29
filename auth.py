@@ -9,7 +9,7 @@ import os
 import urllib
 from genshi.template import TemplateLoader
 import MySQLdb as mysql
-
+import hashlib
 
 db_server = "localhost"
 db_account = "root"
@@ -22,6 +22,8 @@ loader = TemplateLoader(
     os.path.join(os.path.dirname(__file__), 'templates'),
     auto_reload = True)
 
+def pwhash(password):
+    return hashlib.sha512((password).encode('utf-8')).hexdigest()
 
 def account_type(user):
     """
@@ -49,7 +51,7 @@ def check_credentials(username, password):
         cur.execute("SELECT pword FROM accounts WHERE user = '%s'" % (username))
         result = cur.fetchone()
         con.close()
-        if result[0] == password:
+        if result[0] == pwhash(password):
             return None
         else:
             return u"Incorrect username or password." 
