@@ -36,21 +36,11 @@ class Root(object):
         except:
             con.rollback()
         if len(result) == 0:
-            cur.execute("INSERT INTO accounts(user,pword,email,type,classes) VALUES ('','','','admin','%s')" % (key))
+            cur.execute("INSERT INTO accounts(user,pword,email,type,classkey) VALUES ('','','','teach','%s')" % (key))
             con.commit()
             return key
         con.close()
         return "Error"
-
-    def validKey(self, key):
-        con=mysql.connect('localhost','root','myosinmysql','quizzical')
-        try:
-            cur=con.cursor()
-            cur.execute("SELECT classes FROM accounts")
-            result=cur.fetchall()
-        except:
-            result=None
-        con.close
 
     
         
@@ -61,15 +51,50 @@ class Root(object):
         status = ''
         if cherrypy.request.method == 'POST':
             if register:
+                con=mysql.connect('localhost','root','myosinmysql','quizzical')
+                try:
+                    cur=con.cursor()
+                    cur.execute("SELECT user FROM accounts WHERE classkey = '%s'" % (key))
+                    result=cur.fetchone()
+                    con.close()
+                    if result[0] == '':
+                        valid = True
+                    else:
+                        valid = False
+                except:
+                    valid = False
+                try:
+                    con=mysql.connect('localhost','root','myosinmysql','quizzical')
+                    cur=con.cursor()
+                    cur.execute("SELECT COUNT(*) FROM accounts WHERE user = '%s'" % (username))
+                    result=cur.fetchone()
+                    con.close()
+                    if int(result[0])>0:
+                        valid = False
+                        status = status + "Username already in use\n"
+                except:
+                    valid = False
                 if username == '' or password == '' or password2 == '' or email == '' or key == '' or fname == '' or sname == '':
-                    status = status + 'Please complete each field\n' 
-                else:
-                    status=status
+                    status = status + 'Please complete each field\n'
+                    valid = False
                 if '@' not in email or '.' not in email:
                     status = status + 'Please enter a valid email\n'
+                    valid = False
                 if password != password2:
                     status = status + 'Passwords do not match\n'
-                
+                    valid = False
+                if valid == True:
+                    try:
+                        con= mysql.connect('localhost','root','myosinmysql','quizzical')
+                        cur=con.cursor()
+                        cur.execute("UPDATE accounts SET user = '%s', pword = '%s', fname = '%s', sname = '%s', email = '%s' WHERE classkey = '%s'" % (username, pwhash(password2), fname, sname, email, key))      
+                        status = "Account Created"
+                        con.commit()
+                        con.close()
+                    except Exception as e:
+                        status = "Database Error: %s" % repr(e)
+                if valid == True:
+                    raise cherrypy.HTTPRedirect('/auth/login')
         return tmpl.generate(status=status, username=username,password=password,password2=password2,email=email,key=key,fname=fname, sname=sname).render('html', doctype='html')
 
     @cherrypy.expose
@@ -122,7 +147,7 @@ class Root(object):
                         else:
                             status = "New password not re-entered correctly"
                     else: 
-                        status = "wrong"
+                        status = "Password incorrect"
                 except Exception as e:
                     status ="Database Error %s" % repr(e)
                 
